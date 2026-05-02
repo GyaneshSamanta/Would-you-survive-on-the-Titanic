@@ -1,101 +1,89 @@
-# 🚢 Would You Survive the Titanic?
+<div align="center">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/RMS_Titanic_3.jpg/960px-RMS_Titanic_3.jpg" width="80%" alt="RMS Titanic" />
 
-[![Kaggle](https://img.shields.io/badge/Kaggle-Competition-blue.svg)](https://www.kaggle.com/c/titanic)
+# Would You Survive the Titanic?
+
+**A walk through the world's most-taught dataset — feature engineering, EDA, and a model for who lived and who didn't.**
+
+[![Kaggle](https://img.shields.io/badge/Kaggle-Titanic-20BEFF.svg)](https://www.kaggle.com/c/titanic)
 [![Python](https://img.shields.io/badge/Python-3.7+-yellow.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-This repository contains a comprehensive analysis and predictive model for the classic **Titanic: Machine Learning from Disaster** competition on Kaggle.
+</div>
 
 ---
 
-## 📖 Background
+## About
 
-The sinking of the RMS Titanic is one of the most infamous shipwrecks in history. On April 15, 1912, during her maiden voyage, the "unsinkable" Titanic sank after colliding with an iceberg. Unfortunately, there weren't enough lifeboats for everyone onboard, resulting in the death of 1502 out of 2224 passengers and crew.
+|        |                                                                                          |
+| ------ | ---------------------------------------------------------------------------------------- |
+| Who    | [Gyanesh Samanta](https://github.com/GyaneshSamanta), as a portfolio data-science piece. |
+| What   | Predictive modeling on Kaggle's "Titanic: Machine Learning from Disaster" dataset.       |
+| When   | Built September 2021; documentation refreshed 2026.                                      |
+| Where  | Pure-Python notebook stack — pandas, scikit-learn, matplotlib, seaborn.                  |
+| Why    | The canonical first ML problem: small dataset, rich feature engineering, real stakes.    |
 
-While survival involved an element of luck, it appears some groups of people (such as women, children, and the upper-class) were more likely to survive than others.
+## The Story
 
-**The Goal:** Build a predictive model that answers the question: "What sorts of people were more likely to survive?" using passenger data (name, age, gender, socio-economic class, etc.).
+On 15 April 1912, the RMS Titanic went down with 1,502 of 2,224 souls aboard. Survival looked random in the moment — chaos, cold, lifeboats half-full — but the data tells a different story. Class mattered. Sex mattered. Age mattered. The lifeboats reflected an Edwardian social hierarchy as much as they reflected luck.
+
+This notebook walks the dataset end-to-end: a careful EDA that surfaces the survival gap between first-class women (~97%) and third-class men (~14%), imputation strategies for the inevitably-missing `Age` and `Cabin` columns, and engineered features (`FamilySize`, salutation extracted from `Name`, fare bins) that lift accuracy beyond what raw columns can.
+
+The final model is a **Random Forest** tuned via `GridSearchCV`. The result isn't groundbreaking on the Kaggle leaderboard — that's not the point. The point is the trail of decisions: every cell answers a small question, and the conclusions are defensible because the EDA earned them.
+
+If you're new to ML, read the notebook top-to-bottom. If you're benchmarking your own approach, the `submissions/` folder has a Kaggle-formatted baseline you can diff against.
+
+## Gallery
+
+The full visual story lives in **[`notebooks/Titanic_Survival_Prediction.ipynb`](notebooks/Titanic_Survival_Prediction.ipynb)** — survival-by-class bar charts, age distributions split by outcome, correlation heatmaps, and a confusion matrix for the final model.
 
 ---
 
-## 📂 Repository Structure
+## Tech Stack
 
-The project is organized as follows to ensure clarity and maintainability:
+- **Python 3.7+**
+- **pandas / numpy** — data wrangling
+- **matplotlib / seaborn** — plotting
+- **scikit-learn** — preprocessing, RandomForest, GridSearchCV, metrics
+- **Jupyter** — runtime
 
-```text
-.
-├── data/                   # Raw and processed datasets
-│   ├── train.csv           # Training data (features + survival labels)
-│   ├── test.csv            # Test data (features only)
-│   └── gender_submission.csv # Sample submission format
-├── notebooks/              # Jupyter notebooks for analysis
-│   └── Titanic_Survival_Prediction.ipynb # Main EDA and Modelling
-├── submissions/            # Generated prediction files
-│   └── my_submission.csv   # Model predictions for Kaggle
-└── README.md               # Project overview and documentation
+## Repo Structure
+
+```
+Would-you-survive-on-the-Titanic/
+├── data/
+│   ├── train.csv               # Features + survival labels
+│   ├── test.csv                # Features only (Kaggle holdout)
+│   └── gender_submission.csv   # Sample submission format
+├── notebooks/
+│   └── Titanic_Survival_Prediction.ipynb   # EDA + modelling
+└── submissions/
+    └── my_submission.csv       # Generated predictions
 ```
 
----
+## Getting Started
 
-## 🛠️ Getting Started
+```bash
+git clone https://github.com/GyaneshSamanta/Would-you-survive-on-the-Titanic.git
+cd Would-you-survive-on-the-Titanic
 
-### Prerequisites
+pip install pandas numpy matplotlib seaborn scikit-learn jupyter
 
-To run the analysis locally, you'll need Python and the following libraries:
+jupyter notebook notebooks/Titanic_Survival_Prediction.ipynb
+```
 
-- `pandas`
-- `numpy`
-- `matplotlib`
-- `seaborn`
-- `scikit-learn`
+To regenerate a Kaggle submission, run the notebook to completion — the final cells write `submissions/my_submission.csv`.
 
-### Installation
+## Contributing
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/GyaneshSamanta/Would-you-survive-on-the-Titanic.git
-   cd Would-you-survive-on-the-Titanic
-   ```
-2. Navigate to the `notebooks` directory and launch Jupyter:
-   ```bash
-   cd notebooks
-   jupyter notebook Titanic_Survival_Prediction.ipynb
-   ```
+Fork, branch, PR. If your model beats this one on the Kaggle public leaderboard, I'd genuinely like to read the diff.
 
----
+## License
 
-## 📊 Dataset Overview
+MIT.
 
-The dataset provides various features for each passenger:
+## Credits
 
-- **PassengerId**: Unique ID for each passenger.
-- **Survived**: Survival (0 = No, 1 = Yes) — _Target variable_
-- **Pclass**: Ticket class (1 = 1st, 2 = 2nd, 3 = 3rd)
-- **Sex**: Passenger gender
-- **Age**: Age in years
-- **SibSp**: # of siblings / spouses aboard the Titanic
-- **Parch**: # of parents / children aboard the Titanic
-- **Ticket**: Ticket number
-- **Fare**: Passenger fare
-- **Cabin**: Cabin number
-- **Embarked**: Port of Embarkation (C = Cherbourg, Q = Queenstown, S = Southampton)
-
----
-
-## 🏆 Model Performance
-
-The current model uses a **Random Forest Classifier** (or check notebook for details) to predict survival based on engineered features.
-
-_Key Highlights:_
-
-- Detailed Exploratory Data Analysis (EDA).
-- Missing value imputation (Age, Embarked).
-- Feature Engineering (Family size, Title extraction).
-- Hyperparameter tuning using GridSearchCV.
-
----
-
-## ✉️ Contact
-
-Developed with ❤️ by [Gyanesh Samanta](https://github.com/GyaneshSamanta).
-Feel free to reach out for questions or collaborations!
+- Data: [Kaggle — Titanic: Machine Learning from Disaster](https://www.kaggle.com/c/titanic).
+- Author: [Gyanesh Samanta](https://github.com/GyaneshSamanta).
+- Hero image: RMS Titanic, public domain via Wikimedia Commons.
